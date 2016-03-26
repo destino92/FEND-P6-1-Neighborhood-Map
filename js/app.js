@@ -1,9 +1,10 @@
 var app = (function(){
 	var bouncingMarker = null,
-		markers = [],
+		markers        = [],
 		infoWindow,
 		map,
-		places = [],
+		places         = [],
+		category       = ['breakfast','lunch','dinner'],
 		bounds;
 
 
