@@ -20,10 +20,10 @@
 	<div class="container">
 		<div class="row">
 
-			<div>
+			<div class="col-xs-8 col-sm-4 col-md-3">
 				<div class="places-container">
-					<ul>
-						<li>
+					<ul data-bind="foreach: NeighborhoodMap.places">
+						<li data-bind="text: name">
 						</li>
 					</ul>
 				</div>

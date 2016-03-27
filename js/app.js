@@ -77,6 +77,7 @@ var NeighborhoodMap = function(){
 	// Execute the init function when the DOM is ready
 	$(init);
 
+	// return all values that needs to be accessed outside of the modul
 	return {
 		places: places
 	};
