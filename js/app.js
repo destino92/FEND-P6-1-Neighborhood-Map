@@ -69,6 +69,8 @@ var NeighborhoodMap = function(){
 	// Call getPlaces with pushPlaces as an argument.
 	getPlaces(pushPlaces);
 
+	
+
 	// Function to initialize this module.
 	var init = function(){
 		ko.applyBindings(NeighborhoodMap);
