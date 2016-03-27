@@ -1,4 +1,4 @@
-var app = (function(){
+var NeighborhoodMap = function(){
 	// Declare some local variable (might update later).
 	var bouncingMarker = null,
 		markers        = [],
@@ -69,4 +69,12 @@ var app = (function(){
 	// Call getPlaces with pushPlaces as an argument.
 	getPlaces(pushPlaces);
 
-})()
+	// Function to initialize this module.
+	var init = function(){
+
+	};
+
+	// Execute the init function when the DOM is ready
+	$(init);
+
+}();
