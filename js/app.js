@@ -4,7 +4,7 @@ var NeighborhoodMap = function(){
 		markers        = [],
 		infoWindow,
 		map,
-		places         = [],
+		places         = ko.observableArray(),
 		categories     = ['Coffee','Pizza Place','Nightlife'],
 		url,
 		bounds;
@@ -71,10 +71,14 @@ var NeighborhoodMap = function(){
 
 	// Function to initialize this module.
 	var init = function(){
-
+		ko.applyBindings(NeighborhoodMap);
 	};
 
 	// Execute the init function when the DOM is ready
 	$(init);
+
+	return {
+		places: places
+	};
 
 }();
