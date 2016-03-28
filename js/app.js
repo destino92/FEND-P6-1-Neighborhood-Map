@@ -1,7 +1,7 @@
 var NeighborhoodMap = function(){
 	// Declare some local variable (might update later).
 	var bouncingMarker = null,
-		markers        = [],
+		//markers        = [],
 		infoWindow,
 		// MapOptions centers the map to MountainView CA
 		// and set the zoom level to 12
@@ -81,12 +81,40 @@ var NeighborhoodMap = function(){
 		// with the div with the id map as the element
 		// and the mapOptions object as the options 
 		map = new google.maps.Map($('#map').get(0), mapOptions);
+
+		//add markers to the map
+		setMarkers(map);
 	}
+
+	// function to add markers to the map
+	function setMarkers(map) {
+		// create a new bound object for our map boundaries
+		var bounds = new google.maps.LatLngBounds();
+
+		ko.utils.arrayForEach(places(), function(place){
+			// add a marker attribute to each place in 
+			// the places observable array
+			place.marker = new google.maps.Marker({
+				postion: {lat: place.lat, lng: place.lng},
+				title: place.name,
+				animation: google.maps.Animation.DROP,
+				map: map,
+				draggable: false
+			});
+
+			// add the current place marker to the
+			// the map bound 
+			bounds.extend(place.marker.getPostion());
+			map.fitBounds(bounds);
+		});
+
+	}
+
+	//places is empty
+	console.log(places());
 
 	// initialize the map 
 	initMap();
-
-	
 
 	// Function to initialize this module.
 	var init = function(){
