@@ -3,6 +3,12 @@ var NeighborhoodMap = function(){
 	var bouncingMarker = null,
 		markers        = [],
 		infoWindow,
+		// MapOptions centers the map to MountainView CA
+		// and set the zoom level to 12
+		mapOptions     = { 
+			center: {lat: 37.386052, lng: -122.083851},
+			zoom: 12
+		},
 		map,
 		places         = ko.observableArray(),
 		categories     = ['Coffee','Pizza Place','Nightlife'],
@@ -68,6 +74,17 @@ var NeighborhoodMap = function(){
 
 	// Call getPlaces with pushPlaces as an argument.
 	getPlaces(pushPlaces);
+
+	//function to initialize the map
+	function initMap() {
+		// set map to be equal to a new google map
+		// with the div with the id map as the element
+		// and the mapOptions object as the options 
+		map = new google.maps.Map($('#map').get(0), mapOptions);
+	}
+
+	// initialize the map 
+	initMap();
 
 	
 
