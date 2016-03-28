@@ -35,7 +35,7 @@ var NeighborhoodMap = function(){
 					//remove console.log later
 					console.log(category);
 					callback(response, category);
-					console.log(places);
+					console.log(places());
 				}
 			});
 		});
