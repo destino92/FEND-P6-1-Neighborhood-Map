@@ -51,11 +51,13 @@ var NeighborhoodMap = function(){
 		// Get all the items from the ajax response and store it 
 		// to locations.
 		var locations = result.response.groups[0].items;
+		var bounds = new google.maps.LatLngBounds(); 
 
 		// Loop trough locations variable
-		locations.forEach(function(location, index){
+		locations.forEach(function(location){
 			// Push the current location to the places array
 			// after formatting it as an object.
+			//console.log(i);
 			places.push({
 				tip     : location.tips[0].text,
 				name    : location.venue.name,
@@ -67,9 +69,21 @@ var NeighborhoodMap = function(){
 				lat     : location.venue.location.lat,
 				lng     : location.venue.location.lng,
 				category: category,
-				id      : index
+				//id      : i,
+				marker  : new google.maps.Marker({
+							position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
+							title: location.venue.name,
+							animation: google.maps.Animation.DROP,
+							map: map,
+							draggable: false
+						})
 			})
+
+			//bounds.extend(places[i].marker.getPosition());
+			//map.fitBounds(bounds);
 		});
+
+		
 	}
 
 	// Call getPlaces with pushPlaces as an argument.
@@ -83,35 +97,38 @@ var NeighborhoodMap = function(){
 		map = new google.maps.Map($('#map').get(0), mapOptions);
 
 		//add markers to the map
-		setMarkers(map);
+		//setTimeout(function(){ setMarkers(map); }, 10000);
 	}
 
 	// function to add markers to the map
-	function setMarkers(map) {
+	/*function setMarkers(map) {
 		// create a new bound object for our map boundaries
 		var bounds = new google.maps.LatLngBounds();
 
 		ko.utils.arrayForEach(places(), function(place){
 			// add a marker attribute to each place in 
 			// the places observable array
+			console.log(3);
 			place.marker = new google.maps.Marker({
-				postion: {lat: place.lat, lng: place.lng},
+				position: {lat: place.lat, lng: place.lng},
 				title: place.name,
 				animation: google.maps.Animation.DROP,
 				map: map,
 				draggable: false
 			});
 
+			console.log(place.marker)
+
 			// add the current place marker to the
 			// the map bound 
-			bounds.extend(place.marker.getPostion());
+			bounds.extend(place.marker.getPosition());
 			map.fitBounds(bounds);
 		});
 
-	}
+	}*/
 
 	//places is empty
-	console.log(places());
+	setTimeout(function(){ console.log(places()); }, 6000);
 
 	// initialize the map 
 	initMap();
