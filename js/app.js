@@ -1,16 +1,16 @@
 var NeighborhoodMap = function(){
 	// Declare some local variable (might update later).
 	var bouncingMarker = null,
-		//markers        = [],
 		infoWindow,
 		// MapOptions centers the map to MountainView CA
 		// and set the zoom level to 12
 		mapOptions     = { 
 			center: {lat: 37.386052, lng: -122.083851},
-			zoom: 12
+			zoom: 14
 		},
 		map,
 		places         = ko.observableArray(),
+		chosenMarker   = ko.observable(''),
 		categories     = ['Coffee','Pizza Place','Nightlife'],
 		url,
 		bounds;
@@ -78,12 +78,7 @@ var NeighborhoodMap = function(){
 							draggable: false
 						})
 			})
-
-			//bounds.extend(places[i].marker.getPosition());
-			//map.fitBounds(bounds);
 		});
-
-		
 	}
 
 	// Call getPlaces with pushPlaces as an argument.
@@ -95,40 +90,7 @@ var NeighborhoodMap = function(){
 		// with the div with the id map as the element
 		// and the mapOptions object as the options 
 		map = new google.maps.Map($('#map').get(0), mapOptions);
-
-		//add markers to the map
-		//setTimeout(function(){ setMarkers(map); }, 10000);
 	}
-
-	// function to add markers to the map
-	/*function setMarkers(map) {
-		// create a new bound object for our map boundaries
-		var bounds = new google.maps.LatLngBounds();
-
-		ko.utils.arrayForEach(places(), function(place){
-			// add a marker attribute to each place in 
-			// the places observable array
-			console.log(3);
-			place.marker = new google.maps.Marker({
-				position: {lat: place.lat, lng: place.lng},
-				title: place.name,
-				animation: google.maps.Animation.DROP,
-				map: map,
-				draggable: false
-			});
-
-			console.log(place.marker)
-
-			// add the current place marker to the
-			// the map bound 
-			bounds.extend(place.marker.getPosition());
-			map.fitBounds(bounds);
-		});
-
-	}*/
-
-	//places is empty
-	setTimeout(function(){ console.log(places()); }, 6000);
 
 	// initialize the map 
 	initMap();
@@ -141,9 +103,22 @@ var NeighborhoodMap = function(){
 	// Execute the init function when the DOM is ready
 	$(init);
 
-	// return all values that needs to be accessed outside of the modul
+	/* After all initialization has been done i can now place the code to update the DOM
+	 * Below */
+
+	// Click event to be trigered when a map marker or title in the sidebar list is clicked
+	function placeClick(marker){
+		$('ul').find('li').removeClass('selected');
+		chosenMarker(marker);
+		$('ul').find('li:contains('+ marker.title + ')').addClass('selected');
+		console.log('Hi');
+	}
+
+	// return all values that needs to be accessed outside of the module
 	return {
-		places: places
+		places: places,
+		chosenMarker: chosenMarker,
+		placeClick: placeClick
 	};
 
 }();

@@ -28,7 +28,7 @@
 			<div class="col-xs-8 col-sm-4 col-md-3 col-md-pull-9">
 				<div class="places-container">
 					<ul data-bind="foreach: NeighborhoodMap.places">
-						<li data-bind="text: name">
+						<li data-bind="text: name, css: { selected: $data == $root.chosenMarker()} , click: $root.placeClick ">
 						</li>
 					</ul>
 				</div>
