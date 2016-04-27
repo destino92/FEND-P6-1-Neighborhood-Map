@@ -10,7 +10,7 @@ var NeighborhoodMap = function(){
 		},
 		map,
 		places         = ko.observableArray(),
-		chosenMarker   = ko.observable(''),
+		chosenPlace    = ko.observable(''),
 		categories     = ['Coffee','Pizza Place','Nightlife'],
 		url,
 		bounds;
@@ -69,7 +69,6 @@ var NeighborhoodMap = function(){
 				lat     : location.venue.location.lat,
 				lng     : location.venue.location.lng,
 				category: category,
-				//id      : i,
 				marker  : new google.maps.Marker({
 							position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
 							title: location.venue.name,
@@ -79,6 +78,30 @@ var NeighborhoodMap = function(){
 						})
 			})
 		});
+
+		// Loop into each place and set an click event listner to it's marker
+		ko.utils.arrayForEach(places(), function(place){
+			console.log('it\'s orking');
+			google.maps.event.addListener(place.marker, 'click', function() {
+				console.log('clicked marker');
+				place.marker.setAnimation(null);
+				if(infoWindow)infoWindow.close();
+
+				$('ul').find('li').removeClass('selected');
+               	$('ul').find('li:contains('+ place.name + ')').addClass('selected');
+
+                place.marker.setAnimation(google.maps.Animation.BOUNCE);
+                infoWindow = new google.maps.InfoWindow({
+                    content: '<div><h1>' + place.name + '</h1><p>' + 
+                    		place.tip + '</p><ul><li>' + place.rating +
+                    		'</li><li>' + place.address + '</li><li> TEL: ' 
+                    		+ place.phone + '</li></ul></div>'
+                });
+                infoWindow.open(map, place.marker);
+                map.setCenter(place.marker.getPosition());
+                map.setZoom(16);
+			})
+		})
 	}
 
 	// Call getPlaces with pushPlaces as an argument.
@@ -107,17 +130,18 @@ var NeighborhoodMap = function(){
 	 * Below */
 
 	// Click event to be trigered when a map marker or title in the sidebar list is clicked
-	function placeClick(marker){
-		$('ul').find('li').removeClass('selected');
-		chosenMarker(marker);
-		$('ul').find('li:contains('+ marker.title + ')').addClass('selected');
-		console.log('Hi');
+	function placeClick(place){
+		console.log(place);
+		//$('ul').find('li').removeClass('selected');
+		chosenPlace(place);
+		console.log(chosenPlace().marker);
+		google.maps.event.trigger(chosenPlace().marker, 'click');
 	}
 
 	// return all values that needs to be accessed outside of the module
 	return {
 		places: places,
-		chosenMarker: chosenMarker,
+		chosenPlace: chosenPlace,
 		placeClick: placeClick
 	};
 
