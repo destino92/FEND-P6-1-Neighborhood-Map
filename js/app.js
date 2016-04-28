@@ -11,6 +11,8 @@ var NeighborhoodMap = function(){
 		map,
 		places         = ko.observableArray(),
 		chosenPlace    = ko.observable(''),
+		query          = ko.observable(''),
+		filtered,
 		categories     = ['Coffee','Pizza Place','Nightlife'],
 		url,
 		bounds;
@@ -26,7 +28,8 @@ var NeighborhoodMap = function(){
 		categories.forEach(function(category){
 			// Set the url for the ajax request based on
 			// the current category.
-			url = "https://api.foursquare.com/v2/venues/explore?near=Mountain View, CA&query=" + category + "&limit=10&oauth_token=50XUH2ZKED4X4GSRF4EOR0LW4EF0R1IUC1USVIABIYXEMXP5&v=20160321"
+			url = "https://api.foursquare.com/v2/venues/explore?near=Mountain View, CA&query=" 
+			+ category + "&limit=10&oauth_token=50XUH2ZKED4X4GSRF4EOR0LW4EF0R1IUC1USVIABIYXEMXP5&v=20160321"
 			
 			$.ajax({
 				url: url,
@@ -81,9 +84,7 @@ var NeighborhoodMap = function(){
 
 		// Loop into each place and set an click event listner to it's marker
 		ko.utils.arrayForEach(places(), function(place){
-			console.log('it\'s orking');
 			google.maps.event.addListener(place.marker, 'click', function() {
-				console.log('clicked marker');
 				place.marker.setAnimation(null);
 				if(infoWindow)infoWindow.close();
 
@@ -138,11 +139,32 @@ var NeighborhoodMap = function(){
 		google.maps.event.trigger(chosenPlace().marker, 'click');
 	}
 
+	filtered = ko.computed(function(){
+		var notVisible = [],
+			visible    = [];
+		return ko.utils.arrayFilter(places(), function(place){
+			if(place.name.toLowerCase().indexOf(query().toLowerCase()) < 0){
+				notVisible.push(place);
+				notVisible.forEach(function(place){
+					place.marker.setMap(null);
+				})
+
+			} else {
+				visible.push(place);
+				visible.forEach(function(place){
+					place.marker.setMap(map);
+				})
+				return ((query().length == 0 || place.name.toLowerCase().indexOf(query().toLowerCase()) > -1 ))
+			}
+		})
+	})
+
 	// return all values that needs to be accessed outside of the module
 	return {
-		places: places,
+		filtered: filtered,
 		chosenPlace: chosenPlace,
-		placeClick: placeClick
+		placeClick: placeClick,
+		query: query
 	};
 
 }();

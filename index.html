@@ -19,6 +19,14 @@
 <body>
 	<div class="container">
 		<div class="row">
+        	<div class="col-md-9 col-md-push-3">
+          		<div class="form-group">
+            		<input id="search" type="search" name="search" class="form-control" placeholder="Search for ..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on">
+          		</div>
+        	</div>		
+    	</div>
+
+		<div class="row">
 			<!-- display the google map -->
 			<div class="col-md-9 col-md-push-3">
 				<div id="map"></div>
@@ -27,7 +35,7 @@
 			<!-- display all the location/places in a list -->
 			<div class="col-xs-8 col-sm-4 col-md-3 col-md-pull-9">
 				<div class="places-container">
-					<ul data-bind="foreach: NeighborhoodMap.places">
+					<ul data-bind="foreach: NeighborhoodMap.filtered">
 						<li data-bind="text: name, css: { selected: $data == $root.chosenPlace() } , click: $root.placeClick ">
 						</li>
 					</ul>
