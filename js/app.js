@@ -12,7 +12,7 @@ var NeighborhoodMap = function(){
 		places         = ko.observableArray(),
 		chosenPlace    = ko.observable(''),
 		query          = ko.observable(''),
-		filtered,
+		searched,
 		categories     = ['Coffee','Pizza Place','Nightlife'],
 		url,
 		bounds;
@@ -21,7 +21,7 @@ var NeighborhoodMap = function(){
 	/* Get Places to use on the List and as map marker using
 	 * the Foursquare API.
 	 * Location are retrieved based on the categories array
-	 * it will allow for filtering later.
+	 * it will allow for searching and filtering later.
 	*/
 	function getPlaces(callback){
 		// Loop trough the categories array.
@@ -36,9 +36,7 @@ var NeighborhoodMap = function(){
 				dataType: 'jsonp',
 				success: function(response){
 					//remove console.log later
-					console.log(category);
 					callback(response, category);
-					console.log(places());
 				}
 			});
 		});
@@ -139,7 +137,7 @@ var NeighborhoodMap = function(){
 		google.maps.event.trigger(chosenPlace().marker, 'click');
 	}
 
-	filtered = ko.computed(function(){
+	searched = ko.computed(function(){
 		var notVisible = [],
 			visible    = [];
 		return ko.utils.arrayFilter(places(), function(place){
@@ -161,7 +159,7 @@ var NeighborhoodMap = function(){
 
 	// return all values that needs to be accessed outside of the module
 	return {
-		filtered: filtered,
+		searched: searched,
 		chosenPlace: chosenPlace,
 		placeClick: placeClick,
 		query: query
