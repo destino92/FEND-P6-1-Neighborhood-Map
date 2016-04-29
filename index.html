@@ -17,18 +17,19 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body class="menu-hiden">
-	<div class="container">	
+	<div class="container">
+
 		<div class="row row-offcanvas row-offcanvas-left">
 			<!-- display the google map -->
-			<div class="col-md-9 col-md-push-3 col-sm-9 col-sm-push-3">
+			<div class="col-md-9 col-md-push-3 col-sm-9 col-sm-push-3 col-xs-12">
 				<p class="pull-left visible-xs">
-            		<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle list</button>
-          		</p>
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle List</button>
+          </p>
 				<div id="map"></div>
 			</div>
 
 			<!-- display all the location/places in a list -->
-			<div class="col-md-3 col-md-pull-9 col-sm-3 col-sm-pull-9 sidebar-offcanvas" id="sidebar">
+			<div class="col-md-3 col-md-pull-9 col-sm-3 col-sm-pull-9 col-xs-6 sidebar-offcanvas" id="sidebar">
 				<div class="form-group search-container">
             		<input id="search" type="search" name="search" class="form-control" placeholder="Search for ..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on">
           		</div>
