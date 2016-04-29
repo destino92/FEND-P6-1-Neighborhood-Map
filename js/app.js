@@ -13,7 +13,7 @@ var NeighborhoodMap = function(){
 		chosenPlace    = ko.observable(''),
 		query          = ko.observable(''),
 		searched,
-		categories     = ['Coffee','Pizza Place','Nightlife'],
+		categories     = ['All','Coffee','Pizza Place','Nightlife'],
 		url,
 		bounds;
 
@@ -28,6 +28,8 @@ var NeighborhoodMap = function(){
 		categories.forEach(function(category){
 			// Set the url for the ajax request based on
 			// the current category.
+			if(category == 'All') return;
+
 			url = "https://api.foursquare.com/v2/venues/explore?near=Mountain View, CA&query=" 
 			+ category + "&limit=10&oauth_token=50XUH2ZKED4X4GSRF4EOR0LW4EF0R1IUC1USVIABIYXEMXP5&v=20160321"
 			
@@ -140,6 +142,7 @@ var NeighborhoodMap = function(){
 	searched = ko.computed(function(){
 		var notVisible = [],
 			visible    = [];
+
 		return ko.utils.arrayFilter(places(), function(place){
 			if(place.name.toLowerCase().indexOf(query().toLowerCase()) < 0){
 				notVisible.push(place);
@@ -152,6 +155,7 @@ var NeighborhoodMap = function(){
 				visible.forEach(function(place){
 					place.marker.setMap(map);
 				})
+
 				return ((query().length == 0 || place.name.toLowerCase().indexOf(query().toLowerCase()) > -1 ))
 			}
 		})
@@ -162,7 +166,8 @@ var NeighborhoodMap = function(){
 		searched: searched,
 		chosenPlace: chosenPlace,
 		placeClick: placeClick,
-		query: query
+		query: query,
+		categories: categories
 	};
 
 }();
