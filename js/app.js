@@ -13,34 +13,24 @@ var NeighborhoodMap = function(){
 		chosenPlace    = ko.observable(''),
 		query          = ko.observable(''),
 		searched,
-		categories     = ['All','Coffee','Pizza Place','Nightlife'],
 		url,
 		bounds;
 
 
 	/* Get Places to use on the List and as map marker using
 	 * the Foursquare API.
-	 * Location are retrieved based on the categories array
-	 * it will allow for searching and filtering later.
-	*/
+	 */
 	function getPlaces(callback){
-		// Loop trough the categories array.
-		categories.forEach(function(category){
-			// Set the url for the ajax request based on
-			// the current category.
-			if(category == 'All') return;
-
-			url = "https://api.foursquare.com/v2/venues/explore?near=Mountain View, CA&query=" 
-			+ category + "&limit=10&oauth_token=50XUH2ZKED4X4GSRF4EOR0LW4EF0R1IUC1USVIABIYXEMXP5&v=20160321"
+		// Set the url for the ajax request
+		url = "https://api.foursquare.com/v2/venues/explore?near=Mountain View, CA&query=pizza&limit=10&oauth_token=50XUH2ZKED4X4GSRF4EOR0LW4EF0R1IUC1USVIABIYXEMXP5&v=20160321"
 			
-			$.ajax({
-				url: url,
-				dataType: 'jsonp',
-				success: function(response){
-					//remove console.log later
-					callback(response, category);
-				}
-			});
+		$.ajax({
+			url: url,
+			dataType: 'jsonp',
+			success: function(response){
+				//remove console.log later
+				callback(response);
+			}
 		});
 	}
 
@@ -50,7 +40,7 @@ var NeighborhoodMap = function(){
 	 * it creates an abject based on the data retrieved from ajax 
 	 * and pushes it to the places array.
 	 */
-	function pushPlaces(result, category){
+	function pushPlaces(result){
 		// Get all the items from the ajax response and store it 
 		// to locations.
 		var locations = result.response.groups[0].items;
@@ -71,7 +61,6 @@ var NeighborhoodMap = function(){
 				url     : location.venue.url,
 				lat     : location.venue.location.lat,
 				lng     : location.venue.location.lng,
-				category: category,
 				marker  : new google.maps.Marker({
 							position: {lat: location.venue.location.lat, lng: location.venue.location.lng},
 							title: location.venue.name,
@@ -166,8 +155,7 @@ var NeighborhoodMap = function(){
 		searched: searched,
 		chosenPlace: chosenPlace,
 		placeClick: placeClick,
-		query: query,
-		categories: categories
+		query: query
 	};
 
 }();
