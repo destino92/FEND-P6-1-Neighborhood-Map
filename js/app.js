@@ -2,13 +2,6 @@ var NeighborhoodMap = function(){
 	// Declare some local variable (might update later).
 	var bouncingMarker = null,
 		infoWindow,
-		// MapOptions centers the map to MountainView CA
-		// and set the zoom level to 12
-		mapOptions     = { 
-			center: {lat: 37.386052, lng: -122.083851},
-			zoom: 14
-		},
-		map,
 		places         = ko.observableArray(),
 		chosenPlace    = ko.observable(''),
 		query          = ko.observable(''),
@@ -75,8 +68,9 @@ var NeighborhoodMap = function(){
 		map.fitBounds(bounds);
 
         google.maps.event.addDomListener(window, 'resize', function() {
+        	var center = map.getCenter();
         	google.maps.event.trigger(map, "resize");
-        	map.setCenter(mapOptions.center);
+        	map.setCenter(center);
         	map.fitBounds(bounds);
    		});
 
@@ -105,17 +99,6 @@ var NeighborhoodMap = function(){
 
 	// Call getPlaces with pushPlaces as an argument.
 	getPlaces(pushPlaces);
-
-	//function to initialize the map
-	function initMap() {
-		// set map to be equal to a new google map
-		// with the div with the id map as the element
-		// and the mapOptions object as the options 
-		map = new google.maps.Map($('#map').get(0), mapOptions);
-	}
-
-	// initialize the map 
-	initMap();
 
 	// Function to initialize this module.
 	var init = function(){
