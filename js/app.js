@@ -47,10 +47,9 @@ var NeighborhoodMap = function(){
 		var bounds = new google.maps.LatLngBounds(); 
 
 		// Loop trough locations variable
-		locations.forEach(function(location){
+		locations.forEach(function(location, i){
 			// Push the current location to the places array
 			// after formatting it as an object.
-			//console.log(i);
 			places.push({
 				tip     : location.tips[0].text,
 				name    : location.venue.name,
@@ -69,7 +68,17 @@ var NeighborhoodMap = function(){
 							draggable: false
 						})
 			})
+
+			bounds.extend(places()[i].marker.getPosition());
 		});
+
+		map.fitBounds(bounds);
+
+        google.maps.event.addDomListener(window, 'resize', function() {
+        	google.maps.event.trigger(map, "resize");
+        	map.setCenter(mapOptions.center);
+        	map.fitBounds(bounds);
+   		});
 
 		// Loop into each place and set an click event listner to it's marker
 		ko.utils.arrayForEach(places(), function(place){
@@ -121,10 +130,7 @@ var NeighborhoodMap = function(){
 
 	// Click event to be trigered when a map marker or title in the sidebar list is clicked
 	function placeClick(place){
-		console.log(place);
-		//$('ul').find('li').removeClass('selected');
 		chosenPlace(place);
-		console.log(chosenPlace().marker);
 		google.maps.event.trigger(chosenPlace().marker, 'click');
 	}
 
