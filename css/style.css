@@ -39,6 +39,14 @@ ul {
 	padding-left: 0; 
 }
 
+.tip {
+	font-weight: bolder;
+}
+
+.bold-text {
+	font-weight: bold;
+}
+
 .selected {
 	background-color: #22A7F0
 }

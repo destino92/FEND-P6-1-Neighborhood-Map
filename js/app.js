@@ -37,6 +37,9 @@ var NeighborhoodMap = function(){
 		// to locations.
 		var locations = result.response.groups[0].items;
 		var bounds = new google.maps.LatLngBounds(); 
+		var fourSquareUrl = 'https://foursquare.com/v/';
+
+		console.log(locations);
 
 		// Loop trough locations variable
 		locations.forEach(function(location, i){
@@ -49,7 +52,7 @@ var NeighborhoodMap = function(){
 				twitter : location.venue.contact.twitter,
 				address : location.venue.location.formattedAddress[0],
 				rating  : location.venue.rating,
-				url     : location.venue.url,
+				url     : fourSquareUrl + location.venue.id,
 				lat     : location.venue.location.lat,
 				lng     : location.venue.location.lng,
 				marker  : new google.maps.Marker({
@@ -89,10 +92,10 @@ var NeighborhoodMap = function(){
                 place.marker.setAnimation(google.maps.Animation.BOUNCE);
                 bouncingMarker = place.marker;
                 infoWindow = new google.maps.InfoWindow({
-                    content: '<div><h1>' + place.name + '</h1><p>' + 
-                    		place.tip + '</p><ul><li>' + place.rating +
-                    		'</li><li>' + place.address + '</li><li> TEL: ' 
-                    		+ place.phone + '</li></ul></div>'
+                    content: '<div><h1>' + place.name + '</h1><p class="tip">' + place.tip + '</p><ul><li><span class="bold-text">RATING:</span> '
+                    		+ place.rating + '</li><li><span class="bold-text">ADDRESS:</span> ' + place.address + 
+                    		'</li><li><span class="bold-text">TEL:</span> ' + place.phone +
+                    		'</li><li><a href="' + place.url + '" target="_blank">View on Foursquare</li></div></ul>'
                 });
                 infoWindow.open(map, place.marker);
                 map.setCenter(place.marker.getPosition());
