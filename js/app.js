@@ -1,6 +1,6 @@
 var NeighborhoodMap = function(){
 	// Declare some local variable (might update later).
-	var bouncingMarker = null,
+	var bouncingMarker,
 		infoWindow,
 		places         = ko.observableArray(),
 		chosenPlace    = ko.observable(''),
@@ -15,8 +15,7 @@ var NeighborhoodMap = function(){
 	 */
 	function getPlaces(callback){
 		// Set the url for the ajax request
-		url = "https://api.foursquare.com/v2/venues/explore?near=Mountain View, CA&query=pizza&limit=10&oauth_token=50XUH2ZKED4X4GSRF4EOR0LW4EF0R1IUC1USVIABIYXEMXP5&v=20160321"
-			
+		url = "https://api.foursquare.com/v2/venues/explore?near=Mountain View, CA&query=pizza&limit=10&oauth_token=50XUH2ZKED4X4GSRF4EOR0LW4EF0R1IUC1USVIABIYXEMXP5&v=20160321";
 		$.ajax({
 			url: url,
 			dataType: 'jsonp',
@@ -77,13 +76,18 @@ var NeighborhoodMap = function(){
 		// Loop into each place and set an click event listner to it's marker
 		ko.utils.arrayForEach(places(), function(place){
 			google.maps.event.addListener(place.marker, 'click', function() {
-				place.marker.setAnimation(null);
+				if(bouncingMarker && bouncingMarker !== place.marker){
+					bouncingMarker.setAnimation(null);
+					console.log(bouncingMarker.title);
+				}
+
 				if(infoWindow)infoWindow.close();
 
 				$('ul').find('li').removeClass('selected');
                	$('ul').find('li:contains('+ place.name + ')').addClass('selected');
 
                 place.marker.setAnimation(google.maps.Animation.BOUNCE);
+                bouncingMarker = place.marker;
                 infoWindow = new google.maps.InfoWindow({
                     content: '<div><h1>' + place.name + '</h1><p>' + 
                     		place.tip + '</p><ul><li>' + place.rating +
