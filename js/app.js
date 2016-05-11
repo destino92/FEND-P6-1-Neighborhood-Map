@@ -22,6 +22,9 @@ var NeighborhoodMap = function(){
 			success: function(response){
 				//remove console.log later
 				callback(response);
+			},
+			error: function(xhr, ajaxOptions, thrownError){
+				alert(xhr.status + " error \nSomething went wrong with the foursquare API request please refresh your browser or try again letter.");
 			}
 		});
 	}
@@ -38,8 +41,6 @@ var NeighborhoodMap = function(){
 		var locations = result.response.groups[0].items;
 		var bounds = new google.maps.LatLngBounds(); 
 		var fourSquareUrl = 'https://foursquare.com/v/';
-
-		console.log(locations);
 
 		// Loop trough locations variable
 		locations.forEach(function(location, i){
@@ -81,7 +82,6 @@ var NeighborhoodMap = function(){
 			google.maps.event.addListener(place.marker, 'click', function() {
 				if(bouncingMarker && bouncingMarker !== place.marker){
 					bouncingMarker.setAnimation(null);
-					console.log(bouncingMarker.title);
 				}
 
 				if(infoWindow)infoWindow.close();
