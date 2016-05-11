@@ -28,19 +28,37 @@ gulp.task('htmlmin', function(){
 });
 
 // JS concat, strip debugging and minify
-gulp.task('scripts', function() {
-  gulp.src('js/*.js')
-    .pipe(concat('app.js'))
-    .pipe(stripDebug())
-    .pipe(uglify())
-    .pipe(gulp.dest('dist/js/'));
+gulp.task('scripts', ['jshint'], function() {
+  	return gulp.src('js/*.js')
+    	.pipe(concat('app.js'))
+    	.pipe(stripDebug())
+    	.pipe(uglify())
+    	.pipe(gulp.dest('dist/js/'));
 });
 
 // CSS concat, auto-prefix and minify
 gulp.task('styles', function() {
-  gulp.src(['css/*.css'])
-    .pipe(concat('style.css'))
-    .pipe(autoprefix('last 2 versions'))
-    .pipe(cleanCSS())
-    .pipe(gulp.dest('dist/css/'));
+  	return gulp.src(['css/*.css'])
+    	.pipe(concat('style.css'))
+    	.pipe(autoprefix('last 2 versions'))
+    	.pipe(cleanCSS())
+    	.pipe(gulp.dest('dist/css/'));
+});
+
+// default gulp task
+gulp.task('default', ['htmlmin', 'scripts', 'styles'], function() {
+  // watch for HTML changes
+  gulp.watch('*.html', function() {
+    gulp.run('htmlmin');
+  });
+
+  // watch for JS changes
+  gulp.watch('js/*.js', function() {
+    gulp.run('scripts');
+  });
+
+  // watch for CSS changes
+  gulp.watch('css/*.css', function() {
+    gulp.run('styles');
+  });
 });
