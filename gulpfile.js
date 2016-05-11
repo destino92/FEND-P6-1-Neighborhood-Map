@@ -6,7 +6,9 @@ var jshint = require('gulp-jshint'),
 	htmlmin = require('gulp-htmlmin'),
 	concat = require('gulp-concat'),
 	stripDebug = require('gulp-strip-debug'),
-	uglify = require('gulp-uglify');
+	uglify = require('gulp-uglify'),
+	autoprefix = require('gulp-autoprefixer'),
+	cleanCSS = require('gulp-clean-css');
 
 // JS hint task
 gulp.task('jshint', function(){
@@ -32,4 +34,13 @@ gulp.task('scripts', function() {
     .pipe(stripDebug())
     .pipe(uglify())
     .pipe(gulp.dest('dist/js/'));
+});
+
+// CSS concat, auto-prefix and minify
+gulp.task('styles', function() {
+  gulp.src(['css/*.css'])
+    .pipe(concat('style.css'))
+    .pipe(autoprefix('last 2 versions'))
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('dist/css/'));
 });
