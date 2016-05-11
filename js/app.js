@@ -63,7 +63,7 @@ var NeighborhoodMap = function(){
 							map: map,
 							draggable: false
 						})
-			})
+			});
 
 			// Extend map bound with the current place marker
 			bounds.extend(places()[i].marker.getPosition());
@@ -108,8 +108,8 @@ var NeighborhoodMap = function(){
                 // Set infowindow to contain information of the current marker
                 // place.
                 infoWindow = new google.maps.InfoWindow({
-                    content: '<div><h1>' + place.name + '</h1><p class="tip">' + place.tip + '</p><ul><li><span class="bold-text">RATING:</span> '
-                    		+ place.rating + '</li><li><span class="bold-text">ADDRESS:</span> ' + place.address + 
+                    content: '<div><h1>' + place.name + '</h1><p class="tip">' + place.tip + '</p><ul><li><span class="bold-text">RATING:</span> ' +
+                    		place.rating + '</li><li><span class="bold-text">ADDRESS:</span> ' + place.address +
                     		'</li><li><span class="bold-text">TEL:</span> ' + place.phone +
                     		'</li><li><a href="' + place.url + '" target="_blank">View on Foursquare</li></div></ul>'
                 });
@@ -119,8 +119,8 @@ var NeighborhoodMap = function(){
                 // Center the map to the current marker
                 map.setCenter(place.marker.getPosition());
                 map.setZoom(16);
-			})
-		})
+			});
+		});
 	}
 
 	// Call getPlaces with setPlacesAndMarker as an argument.
@@ -164,21 +164,21 @@ var NeighborhoodMap = function(){
 				notVisible.push(place);
 				notVisible.forEach(function(place){
 					place.marker.setMap(null);
-				})
+				});
 
 			} else {
 				visible.push(place);
 				visible.forEach(function(place){
 					place.marker.setMap(map);
-				})
+				});
 
 				// If the current place matches the search input value
 				// set it's marker to be visible on the map and on the list or
 				// if there is no search input show all markers and places
-				return ((query().length == 0 || place.name.toLowerCase().indexOf(query().toLowerCase()) > -1 ))
+				return ((query().length === 0 || place.name.toLowerCase().indexOf(query().toLowerCase()) > -1 ));
 			}
-		})
-	})
+		});
+	});
 
 	// return all values that needs to be accessed outside of the module
 	return {
