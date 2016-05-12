@@ -24,7 +24,9 @@ var NeighborhoodMap = function(){
 				callback(response);
 			},
 			error: function(xhr, ajaxOptions, thrownError){
-				alert(xhr.status + " error \nSomething went wrong with the foursquare API request please refresh your browser or try again letter.");
+				$('#map').hide();
+				$('#sidebar').hide();
+				$('#message').html("<h1>Oops!!! " + xhr.status + " error</h1><p>Something went wrong with the foursquare API request.\nPlease refresh your browser ,try again letter or check your internet connection.</p>");
 			}
 		});
 	}
