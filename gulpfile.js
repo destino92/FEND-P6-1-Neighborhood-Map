@@ -59,7 +59,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('watch', function(){
-  gulp.watch(['htmlmin']);
+  gulp.watch('src/*.html',['htmlmin']);
   gulp.watch('src/js/*.js',['scripts']);
   gulp.watch('src/css/*.css', ['styles']);
 })
