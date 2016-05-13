@@ -84,6 +84,7 @@
 			// to locations.
 			var locations = result.response.groups[0].items,
 				bounds = new google.maps.LatLngBounds(), 
+				infoWindow = new google.maps.InfoWindow(),
 			    fourSquareUrl = 'https://foursquare.com/v/';
 
 			// Loop trough locations variable
@@ -121,7 +122,7 @@
 	        google.maps.event.addDomListener(window, 'resize', function() {
 	        	var center = map.getCenter();
 	        	google.maps.event.trigger(map, "resize");
-	        	map.setCenter(center);
+	        	map.panTo(center);
 	        	map.fitBounds(bounds);
 	   		});
 
@@ -151,18 +152,19 @@
 
 	                // Set infowindow to contain information of the current marker
 	                // place.
-	                infoWindow = new google.maps.InfoWindow({
-	                    content: '<div><h1>' + place.name + '</h1><p class="tip">' + place.tip + '</p><ul><li><span class="bold-text">RATING:</span> ' +
+	                var infoWindowContent = '<div><h1>' + place.name + '</h1><p class="tip">' + place.tip + 
+	                			'</p><ul><li><span class="bold-text">RATING:</span> ' +
 	                    		place.rating + '</li><li><span class="bold-text">ADDRESS:</span> ' + place.address +
 	                    		'</li><li><span class="bold-text">TEL:</span> ' + place.phone +
 	                    		'</li><li><a href="' + place.url + '" target="_blank">View on Foursquare</li></div></ul>'
-	                });
+	                
+	                infoWindow.setContent(infoWindowContent);
 
 	                infoWindow.open(map, place.marker);
 
 	                // Center the map to the current marker
-	                map.setCenter(place.marker.getPosition());
-	                map.setZoom(16);
+	                map.panTo(place.marker.getPosition());
+	                //map.setZoom(18);
 				});
 			});
 		}
