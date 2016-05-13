@@ -5,10 +5,33 @@ var NeighborhoodMap = function(){
 		places         = ko.observableArray(),
 		chosenPlace    = ko.observable(''),
 		query          = ko.observable(''),
+		apiError       = ko.observable(true),
+		errorMessage   = ko.observable(),
 		searched,
 		url,
+		map,
 		bounds;
 
+	// Function to be used as a callback for the google map
+	// I can't seem to figure out a way to handle errors here 
+	function initMap() {
+		// set map to be equal to a new google map
+		// with the div with the id map as the element
+		// and the mapOptions object as the options 
+		map = new google.maps.Map($('.map').get(0), { center: {lat: 37.386052, lng: -122.083851},
+			zoom: 14 }
+		);
+
+		// initialize module
+		ko.applyBindings(NeighborhoodMap);
+	}
+
+	// Fallback function for google map loading script
+	function googleError() {
+		ko.applyBindings(NeighborhoodMap);
+		errorMessage("<h1>Google Map error!!!</h1><p>Something went wrong with the Google map API request.\nPlease refresh your browser ,try again letter or check your internet connection.</p>");
+		apiError(false);
+	}
 
 	/* Get Places to use on the List and as map marker using
 	 * the Foursquare API.
@@ -24,9 +47,9 @@ var NeighborhoodMap = function(){
 				callback(response);
 			},
 			error: function(xhr, ajaxOptions, thrownError){
-				$('#map').hide();
-				$('#sidebar').hide();
-				$('#message').html("<h1>Oops!!! " + xhr.status + " error</h1><p>Something went wrong with the foursquare API request.\nPlease refresh your browser ,try again letter or check your internet connection.</p>");
+				errorMessage("<h1>Oops!!! " + xhr.status + 
+				" error</h1><p>Something went wrong with the foursquare API request.\nPlease refresh your browser ,try again letter or check your internet connection.</p>");
+				apiError(false);
 			}
 		});
 	}
@@ -128,14 +151,6 @@ var NeighborhoodMap = function(){
 	// Call getPlaces with setPlacesAndMarker as an argument.
 	getPlaces(setPlacesAndMarker);
 
-	// Function to initialize this module.
-	var init = function(){
-		ko.applyBindings(NeighborhoodMap);
-	};
-
-	// Execute the init function when the DOM is ready
-	$(init);
-
 	/* After all initialization has been done i can now place the code to update the DOM
 	 * Below */
 
@@ -187,7 +202,11 @@ var NeighborhoodMap = function(){
 		searched: searched,
 		chosenPlace: chosenPlace,
 		placeClick: placeClick,
-		query: query
+		query: query,
+		initMap: initMap,
+		apiError: apiError,
+		errorMessage: errorMessage,
+		googleError: googleError
 	};
 
 }();
