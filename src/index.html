@@ -7,6 +7,9 @@
 	<meta name="description" content="Udacity Neighborhood map project">
 	<meta name="author" content="Destino Dello">
 
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -14,24 +17,24 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<div class="container">
 
 		<div class="row row-offcanvas row-offcanvas-left" data-bind="css: { active: toggleActiveClass }">
 			<!-- display the google map -->
-			<div class="col-md-9 col-md-push-3 col-sm-9 col-sm-push-3 col-xs-12">
+			<main class="col-md-9 col-md-push-3 col-sm-9 col-sm-push-3 col-xs-12">
 				<!-- button to appear and disapear on bigger and smaller screen -->
 				<p class="pull-left visible-xs">
             		<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" data-bind="visible: apiError, click: slideList">Toggle List</button>
           		</p>
           		<div class="message" data-bind="html: errorMessage"></div>
 				<div class="map" data-bind="visible: NeighborhoodMap.apiError"></div>
-			</div>
+			</main>
 
 			<!-- display all the location/places in a list -->
-			<div class="col-md-3 col-md-pull-9 col-sm-3 col-sm-pull-9 col-xs-6 sidebar-offcanvas" id="sidebar"  data-bind="visible: NeighborhoodMap.apiError">
+			<aside class="col-md-3 col-md-pull-9 col-sm-3 col-sm-pull-9 col-xs-6 sidebar-offcanvas" id="sidebar"  data-bind="visible: NeighborhoodMap.apiError">
 				<div class="form-group search-container">
             		<input id="search" type="search" name="search" class="form-control" placeholder="Search for ..." data-bind="value: query, valueUpdate: 'keyup'" autocomplete="on">
           		</div><!-- end search-container -->
@@ -42,7 +45,7 @@
 						</li>
 					</ul>
 				</div><!-- end places-container -->
-			</div><!-- end sidebar-offcanvas -->
+			</aside><!-- end sidebar-offcanvas -->
 		</div><!-- end row-offcanvas -->
 	</div><!-- end container -->
 
