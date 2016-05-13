@@ -195,26 +195,16 @@
 		// Define a computed observale to handle search activity
 		// from search input
 		searched = ko.computed(function(){
-			// Here visible and not visible are arrays that will contains
-			// places and marker that are visible and not visible
-			var notVisible = [],
-				visible    = [];
 
 			// Filter places accordind to the search input value
 			return ko.utils.arrayFilter(places(), function(place){
 				// If the current place doesn't match the search input value
 				//remove it's marker from the map and the list
 				if(place.name.toLowerCase().indexOf(query().toLowerCase()) < 0){
-					notVisible.push(place);
-					notVisible.forEach(function(place){
-						place.marker.setMap(null);
-					});
+					place.marker.setVisible(false);
 
 				} else {
-					visible.push(place);
-					visible.forEach(function(place){
-						place.marker.setMap(map);
-					});
+					place.marker.setVisible(true);
 
 					// If the current place matches the search input value
 					// set it's marker to be visible on the map and on the list or
