@@ -10,6 +10,7 @@
 			query          = ko.observable(''),
 			apiError       = ko.observable(true),
 			errorMessage   = ko.observable(),
+			toggleActiveClass = ko.observable(false),   
 			searched,
 			url,
 			map,
@@ -172,6 +173,7 @@
 			// stop animation of the infowindow marker when closed
 			google.maps.event.addListener(infoWindow, 'closeclick', function(){
 				infoWindow.marker.setAnimation(null);
+				chosenPlace('');
 			});
 		}
 
@@ -214,6 +216,11 @@
 			});
 		});
 
+		// 
+		function slideList(){
+			toggleActiveClass(!toggleActiveClass());
+		}
+
 		// return all values that needs to be accessed outside of the module
 		return {
 			searched: searched,
@@ -223,7 +230,9 @@
 			initMap: initMap,
 			apiError: apiError,
 			errorMessage: errorMessage,
-			googleError: googleError
+			googleError: googleError,
+			toggleActiveClass: toggleActiveClass,
+			slideList: slideList
 		};
 
 	}();

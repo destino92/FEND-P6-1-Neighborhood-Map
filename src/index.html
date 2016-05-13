@@ -19,12 +19,12 @@
 <body>
 	<div class="container">
 
-		<div class="row row-offcanvas row-offcanvas-left">
+		<div class="row row-offcanvas row-offcanvas-left" data-bind="css: { active: toggleActiveClass }">
 			<!-- display the google map -->
 			<div class="col-md-9 col-md-push-3 col-sm-9 col-sm-push-3 col-xs-12">
 				<!-- button to appear and disapear on bigger and smaller screen -->
 				<p class="pull-left visible-xs">
-            		<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" data-bind="visible: apiError">Toggle List</button>
+            		<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas" data-bind="visible: apiError, click: slideList">Toggle List</button>
           		</p>
           		<div class="message" data-bind="html: errorMessage"></div>
 				<div class="map" data-bind="visible: NeighborhoodMap.apiError"></div>
@@ -51,13 +51,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
     <script src="js/app.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?callback=NeighborhoodMap.initMap" onerror="NeighborhoodMap.googleError()" async defer></script>
-    <script>
-    	// Script to toggle .offcanvas and handle it's click event
-    	$(document).ready(function () {
-  			$('[data-toggle="offcanvas"]').click(function () {
-    		$('.row-offcanvas').toggleClass('active')
-  			});
-		});
-    </script>
 </body>
 </html>
