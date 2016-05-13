@@ -156,16 +156,22 @@
 	                			'</p><ul><li><span class="bold-text">RATING:</span> ' +
 	                    		place.rating + '</li><li><span class="bold-text">ADDRESS:</span> ' + place.address +
 	                    		'</li><li><span class="bold-text">TEL:</span> ' + place.phone +
-	                    		'</li><li><a href="' + place.url + '" target="_blank">View on Foursquare</li></div></ul>'
+	                    		'</li><li><a href="' + place.url + '" target="_blank">View on Foursquare</li></div></ul>';
 	                
 	                infoWindow.setContent(infoWindowContent);
-
+	                // assign current marker as infowindow marker
+	                infoWindow.marker = place.marker;
 	                infoWindow.open(map, place.marker);
 
 	                // Center the map to the current marker
 	                map.panTo(place.marker.getPosition());
 	                //map.setZoom(18);
 				});
+			});
+			
+			// stop animation of the infowindow marker when closed
+			google.maps.event.addListener(infoWindow, 'closeclick', function(){
+				infoWindow.marker.setAnimation(null);
 			});
 		}
 
