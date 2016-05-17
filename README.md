@@ -13,14 +13,14 @@ I was asked to build this app after completing courses on **JAVASCRIPT DESIGN PA
 ## Installation
 In order to install this project and test locally you will have to run the following command.
 ```
-$ git clone https://github.com/destino92/FEND-P6-1-Neighborhood-Map.git
-$ cd FEND-P6-1-Neighborhood-Map
-$ npm init
+git clone https://github.com/destino92/FEND-P6-1-Neighborhood-Map.git
+cd FEND-P6-1-Neighborhood-Map
+npm init
 ```
 And you can open index.html in your browser.
 If you are going to play arround with the code do it in the `src` directory, you can run
 ```
-$ gulp 
+gulp 
 ```
 It will run the default gulp task that you can look up in `gulpfile.js`
 To update any changes that you make in the `src` directory to the `dist` directory and reload the page in your web browser.
