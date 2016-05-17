@@ -1,4 +1,4 @@
-# Neighborhood Mao Project
+# Neighborhood Map Project
 ## Description
 This is a single page app that suggest users 10 pizza places arround Mountain View, CA.
 It uses the Foursquare API to get 10 interesting pizza places around Mountain View and display their names in a sidebar and corresponding map markers on a map.
